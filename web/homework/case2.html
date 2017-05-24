@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+	作者：2805647663@qq.com
+	时间：2017-04-12
+	描述：通过for循环实现百元买白鸡功能：公鸡5元一只，母鸡3元一只
+	小鸡3只一元，100元买一百只鸡，有多少种买法！
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+//			买i只公鸡
+			
+			var num=1;
+			for(i=0;i<=20;i++)
+			{
+//				买j只母鸡
+				for(j=0;j<=33;j++)
+				{
+					for(k=0;k<=100;k++)
+					{
+						
+						if((i*5+j*3+k/3==100)&&(i+j+k==100))
+						{document.write('第'+num+'种方案:');
+						 document.write('公鸡：'+ i +'只');
+						 document.write('母鸡：'+ j +'只');
+						 document.write('小鸡：'+ k +'只');
+						 document.write("<hr color='aqua' />"+"<br/>")
+						}
+					}
+				}
+			num+=1;
+		}
+			for(var i=0;i<=20;i++)
+			{
+				for(var j=0;j<=33;j++)
+				{
+					z=100-i-j;
+					if(i*5+j*3+z/3==100&&(z%3==0))
+					{
+						document.write('公鸡：'+i+"母鸡："+j+"小鸡："+z+'<hr/>')
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

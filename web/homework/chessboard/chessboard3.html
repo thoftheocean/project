@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>国际象棋棋盘</title>	
+		<style type="text/css">
+			*{margin: 0 auto;
+			 padding: 0;
+			 background: blanchedalmond;
+			 position: relative;
+			 
+			 }
+			 .chessboard{
+			 width: 320px;
+			 height: 320px;
+			 }
+			 .black_grid{
+			 background: black;
+			 height: 40px;
+			 width: 40px;
+			 float: left;
+			 }
+			 .white_grid{
+			 background: white; 
+			 height: 40px;
+			 width: 40px;
+			 float: left;
+			 }
+			 /*.chess{
+			 height: 40px;
+			 width: 16px;
+			 margin: 0px;
+			 
+			 background-position: 0 0;
+			 display: inline-block;
+			 float: left;
+			 }*/
+		</style>
+	</head>
+	<body>
+		<div class="chessboard">
+			<script type="text/javascript">
+				for(var i=1;i<=8;i++)
+				{   
+					for(var j=1;j<=8;j++)
+					{
+						if((i%2==1&&j%2==1)||(i%2==0&&j%2==0))
+						{
+							document.write("<div class='black_grid'>");
+							document.write("<div ><span class='chess'></span></div>");
+							document.write("</div>");
+						}
+						else
+						{document.write("<div class='white_grid'></div>")}	
+					}
+				}     
+		</script>
+		</div>
+	</body>
+</html>

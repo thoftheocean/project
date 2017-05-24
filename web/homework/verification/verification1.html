@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+	作者：2805647663@qq.com
+	时间：2017-04-13
+	描述：使用javascript验证手机号是否符合格式，验证姓名长度：
+	2-10个字，密码：密码以字母开头，长度在6~18之间，只能包含字符、数字和下划线，
+	备注选填。
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>表单验证</title>
+	</head>
+	<body>
+		<form action="doAction.php" method='post' onsubmit='return check()'>
+			<table rules="all" frame="box" bgcolor=#D8D8D8>
+				<tr>
+					<td align="right">手机号：</td>
+					<td><input id="tel_number" name="tel-number" ></td>
+					<td>必填，用户手机号</td>
+				</tr>
+				<tr>
+					<td align="right">姓名：</td>
+					<td><input id="username" type="text" name="username" ></td>
+					<td>必填，用户真实姓名</td>
+				</tr>
+				<tr>
+					<td align="right">密码：</td>
+					<td><input id="password" type="password" name="password" maxlength="18" ></td>
+					<td>必填，密码以字母开头，长度在6-18之间，只能包含字符、数字和下划线</td>
+				</tr>
+				<tr>
+					<td align="right">确认密码：</td>
+					<td><input id="confirm_password" type="password" name="confirm_password" maxlength="18" ></td>
+					<td>必填</td>
+				</tr>
+				<tr>
+					<td align="right">备注：</td>
+					<td><input id="text1" type="text" name="remark" ></td>
+					<td>选题，随边写些内容</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<center> 
+						<input type="submit"  value="确定">
+						<input type="reset"  value="返回列表">
+						</center>
+					</td>
+				</tr>
+			</table>	
+		</form>
+		<script type="text/javascript">
+			function check()
+			{
+				var tel_number=document.getElementById("tel_number").value;
+				if(!(/^1[34578]\d{9}$/.test(tel_number)))
+	    		{
+	        	alert("手机号码有误");  
+	        	return false; 
+	            } 
+	         
+				var username=document.getElementById("username").value;
+				if(!/^([\u4e00-\u9fa5]|[a-z]| ){2,10}/.test(username))
+				{
+					alert('用户名不合法');
+					return false;
+				}
+				
+				var password1=document.getElementById("password").value;
+				if(!/^[a-zA-Z]([\d]|[\w]|_){5,17}$/.test(password1))
+				{
+					alert('密码不符合格式');
+					return false;
+				}
+				
+				var password2=document.getElementById("confirm_password").value;
+				if(!(/^[a-zA-Z]([\d]|[\w]|_){5,17}$/.test(password2)&&(password1==password2)))
+				{   
+					alert('密码不一致');
+					return false;
+				}
+				
+				return true;
+		  }
+     </script>
+	
+	</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+	作者：2805647663@qq.com
+	时间：2017-04-19
+	描述：要求完成一个图片轮播的效果, 具体要求：
+		1、可以自动兼容10张以内的图片（增加或者减少轮播图片数量的时候，不会影响到整体布局和效果）。
+		2、手动点击可以切换对应的图片。
+		3、如果在没有手动点击的情况下，图片每隔5秒自动依次轮播，鼠标移动到大图的时候暂停自动轮播，
+		     鼠标移开的时候恢复自动轮播
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>轮播图</title>
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;cursor: pointer;}
+			#img_box{
+				margin: 20px auto;
+				padding: 0;
+				height:600px ;
+				width:1000px;	
+			}
+		
+			#img_1{
+				background: url(img/1.jpg)  ; 
+				height:600px ;
+				width:1000px;	
+				display:none;
+			}
+			#img_2{
+				background: url(img/2.jpg) ; 
+				height:600px ;
+				width:1000px;	
+				display:none;"
+			}
+			#img_3{
+				background: url(img/3.jpg)  ; 
+			
+				height:600px ;
+				width:1000px;	
+				display: block;"
+			}
+		</style>
+	</head>
+	<body>
+		<div id="img_box">
+			
+			<div id="img_1" ></div>
+			<div id="img_2" ></div>
+			<div id="img_3" ></li>
+
+		</div>
+		<span id="set_1" style="border: 1px solid bisque; ">自动播放按钮1</span>
+		<span id="set_2" style="border: 1px solid bisque; ">自动播放按钮2</span>
+		<span id="set_3" style="border: 1px solid bisque; ">自动播放按钮3</span>
+	</body>
+	<script>
+		
+		$(function(){
+			
+			$("#set_1").click(function(){
+				var speed = 0.01;
+		        var timer = null;
+   				var img_3_opacity=$("#img_3").css('opacity');
+   				alert(img_3_opacity);
+				window.clearInterval(timer);
+				
+			    timer = setInterval(function(){
+			    	if(img_3_opacity>=0)
+			    	{
+			    		alert(img_3_opacity);
+			        	img_3_opacity= img_3_opacity-speed;
+			        	alert(img_3_opacity);
+			        	
+			        	
+	                 }
+			    	alert($("#img_3").css('opacity'))
+			    	$("#img_3").css('opacity',0.4);
+			    	
+	            },30)
+	          
+	           
+				$("#img_3").css('display','none');
+				$("#img_2").css('display','none');
+				$("#img_1").css('display','block');
+				
+				img_1_opacity=$("#img_1").css('opacity');
+				
+				window.clearInterval(timer);
+			    timer = setInterval(function(){
+			    	if(img_1_opacity<=1)
+			    	{
+			        img_1_opacity = img_1_opacity + speed;
+			        $("#img_1").css('opacity',img_1_opacity);
+	                 }
+	            },10);
+	            
+	           });
+				
+				
+			
+			$("#set_2").click(function(){
+				$("#img_1").css('display','none');
+				$("#img_2").css('display','block');
+				$("#img_3").css('display','none');
+				
+			})
+			
+			$("#set_3").click(function(){
+				$("#img_1").css('display','none');
+				$("#img_2").css('display','none');
+				$("#img_3").css('display','block');
+			})
+			//打开定时器。
+//			timer=setInterval(function(){ 
+//			$("#set_1").trigger('click') 
+// 			},5000); //2000为轮播的时间
+
+
+
+			
+//			$("#t_fadeIn").click(function(){
+//				$("#img_1").fadeIn();
+//			})
+//			$("#t_fadeOut").click(function(){
+//				$("#img_out").fadeOut();
+//			})
+//			$("#t_fadeToggle").click(function(){
+//				$(".meinv").fadeToggle();
+//			$('#img_1')
+
+	}); 
+	</script>
+</html>

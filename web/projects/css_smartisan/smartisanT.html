@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>锤子商城</title>
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css"/>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			
+			a{
+				text-decoration: none;
+			}
+			
+			li{
+				list-style: none;
+			}
+			
+			body{
+				font-family: "微软雅黑";
+			}
+			
+			
+			
+			.img-total {
+	            width: 50px;
+	            height: 50px;
+	            background-image: url(img/logo.png);
+	            background-size: 50px 260px;
+	            display: inline-block;
+        	}
+
+	        .img-logo {
+	            background-position: 0 0;
+	            margin-top: 25px;
+	        }
+
+			.header
+			{
+				width: 100%; 
+				height: 100px; 
+				background: black;
+			}
+			
+			.container{
+				margin-left: auto;
+				margin-right: auto; 
+				width: 1220px; 
+				height: 100px; 
+			}
+			
+			.logo{
+				width: 50px; 
+				height: 100px;
+				float: left; 
+			}
+			
+			.user
+			{
+				width: 50px;
+				height: 28px;
+				color: #FFFFFF;
+				float: right;
+				margin-top: 36px; 
+				margin-right: 10px;
+			}
+			
+			.user_icon
+			{
+				width: 50px;
+				height: 28px;
+				text-align:center;
+				display: block;
+				margin-top: 5px;
+			}
+			
+
+			
+			.nav_ul
+			{
+				float: right; 
+				margin-top: 36px; 
+				margin-right: 80px;
+				line-height: 28px; 
+				color: #FFFFFF;
+				font-size: 14px;
+			}
+
+			.nav_ul li
+			{
+				float: left; 
+				margin-left: 26px;
+			}
+			
+			.nav_ul li a:link, .nav_ul li a:visited
+			{
+				text-decoration: none;
+				color: lightgrey;
+			}
+			
+			
+			.nav_ul li a:hover , .nav_ul li a:active
+			 {
+				 text-decoration: none;
+				 color: #FFFFFF;
+			 }
+			 
+
+			.cart
+			{
+				width: 80px;
+				height: 28px;
+				color: #FFFFFF;
+				float: right;
+				margin-top: 36px; 
+				margin-right: 10px;
+			}
+			
+			.cart_icon
+			{
+				width: 50px;
+				height: 28px;
+				text-align:center;
+				display: block;
+				margin-top: 5px;
+				float: left;
+			}
+			
+			 .circle{
+			    width:20px;
+			    height:20px;
+			    background-color:gray;
+			    border-radius:10px;
+			    float: left;
+			    
+			    margin-left: -15px;
+			    margin-top: 10px;
+			}
+
+			.circle_content{
+			    width:20px;
+			    height:20px;
+			    text-align:center;
+				display: block;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<div class="container">
+				<div class="logo">
+					<a href="http://www.maiziedu.com" title="锤子商城">
+						<span class="img-total img-logo"></span>
+					</a>
+				</div>
+				
+				<div class="cart">
+					<span class="glyphicon glyphicon-shopping-cart cart_icon" aria-hidden="true"></span>
+					<div class="circle"><span class="circle_content">10</span></div>
+				</div>
+				
+				<div class="user">
+					<span class="glyphicon glyphicon-user user_icon" aria-hidden="true"></span>
+				</div>
+				
+				<ul class="nav_ul">
+					<li><a href="#">在线商城</a></li>
+					<li><a href="#">Smartisan M1 / M1L</a></li>
+					<li><a href="#">Smartisan OS</a></li>
+					<li><a href="#">欢喜云</a></li>
+					<li><a href="#">应用下载</a></li>
+					<li><a href="#">官方论坛</a></li>
+				</ul>
+				
+				
+			</div>
+		</div>
+	</body>
+</html>

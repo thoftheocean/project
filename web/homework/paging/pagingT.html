@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.title
+			{
+				width: 150px;
+				border: 1px solid black;
+				
+			}
+			
+			.cell
+			{
+				width: 150px;
+				border: 1px solid black;
+				
+			}
+		</style>
+		
+
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td class="title">学号</td>
+				<td class="title">姓名</td>
+				<td class="title">年龄</td>
+			</tr>
+		</table>
+		
+		<table id="tableStudent">
+			<!--<tr>
+				<td class="cell">学号</td>
+				<td class="cell">姓名</td>
+				<td class="cell">年龄</td>
+			</tr>-->
+		</table>
+		
+		<br>
+		<br>
+		<br>
+		<br>
+		共<span id="spnRowsCount"></span>条记录&nbsp;&nbsp;&nbsp;&nbsp; <!--&nbsp表示空格-->
+		
+		每页5条记录&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		共<span id="spnPageCount"></span>页&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		当前第<span id="spnPageIndex"></span>页&nbsp;&nbsp;&nbsp;&nbsp;
+		
+		<button id="btnFirst" onclick="onFirst();">首页</button>
+		<button id="btnPre" onclick="onPre();">上一页</button>
+		<button id="btnNext" onclick="onNext();">下一页</button>
+		<button id="btnLast" onclick="onLast();">尾页</button>
+		
+		<script type="text/javascript">
+		var _student_list = [];
+		var _page_index = 0;
+		var PAGE_SIZE = 5;
+		var _rows_count = 28;
+		var _page_count = 0;
+		var _start_index = 0;
+		var _end_index = 4;
+		
+		//学生信息列表
+		function init_students()
+		{
+			for(var i = 0; i < _rows_count; ++i)
+			{
+				var stu = {"id": i, "name":"stu" + i, "age":i };
+				_student_list.push(stu);
+			}
+		}
+			
+		function create_table(startIndex, endIndex)
+		{
+			var str = "";
+			for(var i = startIndex; i <= endIndex; ++i)
+			{
+				str = str + "<tr><td class='cell'>" + _student_list[i].id + "</td><td class='cell'>" + _student_list[i].name + "</td><td class='cell'>" + _student_list[i].age + "</td></tr>";
+			}
+			
+			console.log(str);
+			var table = document.getElementById("tableStudent");
+			table.innerHTML = str;
+		}
+		
+		//计算总共有多少页
+		function count_page_count(rows_count, page_size)
+		{
+			var page_count = 0;
+			if(_rows_count % page_size == 0)
+			{
+				page_count = _rows_count / page_size;
+			}
+			else
+			{
+				page_count = parseInt(_rows_count / page_size) + 1;
+			}
+			return page_count;
+		}
+		
+		//显示多少页 每页多少条记录 共多少页等
+		function show_page_info()
+		{
+			var spnRowsCount = document.getElementById("spnRowsCount");
+			var spnPageCount = document.getElementById("spnPageCount");
+			var spnPageIndex = document.getElementById("spnPageIndex");
+			
+			_page_count = count_page_count(_rows_count, PAGE_SIZE);
+			
+			spnRowsCount.innerText = _rows_count;
+			spnPageCount.innerText = _page_count;
+			spnPageIndex.innerText = _page_index + 1;
+			
+			
+		}
+		//计算开始每页开始行和结束行的下标
+		function get_index(page_index, page_size, rows_count)
+		{
+			var start_index = 0;
+			var end_index = 0;
+			
+			start_index = page_index * page_size;
+			end_index = (page_index + 1) * page_size - 1;
+			console.log(rows_count);
+			if(end_index >= rows_count)
+			{
+				end_index = rows_count - 1;
+			}
+			
+			return {"start_index" : start_index, "end_index" : end_index};
+		}
+		//首页
+		function onFirst()
+		{
+			_page_index = 0;
+			index = get_index(_page_index, PAGE_SIZE, _rows_count);
+			show_page_info();
+			create_table(index.start_index, index.end_index);
+		}
+		
+		function onPre()
+		{
+			
+			if(_page_index == 0)
+			{
+				alert("已经是第一页");
+				return;
+			}
+			_page_index = _page_index - 1;
+			
+			index = get_index(_page_index, PAGE_SIZE, _rows_count);
+			show_page_info();
+			create_table(index.start_index, index.end_index);
+		}
+		
+		function onNext()
+		{
+			
+			if(_page_index == _page_count - 1)
+			{
+				alert("已经是最后一页");
+				return;
+			}
+			_page_index = _page_index + 1;
+			
+			index = get_index(_page_index, PAGE_SIZE, _rows_count);
+			show_page_info();
+			create_table(index.start_index, index.end_index);
+		}
+		
+		function onLast()
+		{
+			
+			_page_index = _page_count - 1;
+			index = get_index(_page_index, PAGE_SIZE, _rows_count);
+			show_page_info();
+			create_table(index.start_index, index.end_index);
+		}
+		
+		init_students();
+		create_table(0,4);
+		show_page_info();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body style="margin:0 auto; width:100%; height:800px">
+	<!--遮罩层-->
+	<div id="zz" style="width:100%;height:800px;opacity: .3;filter:alpha(opacity=30);background-color:burlywood; position:fixed;top:0;z-index:1000;"></div>
+	<a href="#" onclick="togglediv()">注册</a>
+	<!--注册界面-->
+	<div id="reg" style="position:fixed; top:40%; left:40%; background-color:aquamarine; width:300px;height:120px;z-index:1001;display: none;">
+	//表单	
+	<form action="" method="post" onsubmit="return validate_form()">
+		邮箱：<input type="text" name="email" id="email" value=""><br/>
+		用户名：<input type="text" name="username" id="username"><br/>
+		密码：<input type="text" name="password1" id="password1"><br/>
+		确认密码：<input type="text" name="password2" id="password2"><br/>
+		<input type="submit" value="提交"><input type="button" value="关闭" onclick="togglediv()">
+	</form>
+	
+	</div>
+	<script type="text/javascript">
+		
+	//切换
+	function togglediv(){
+		var zzObj = document.getElementById("zz");
+		var regObj = document.getElementById("reg");
+		zzObj.style.display=="none"?zzObj.style.display="block":zzObj.style.display="none";
+		regObj.style.display=="none"?regObj.style.display="block":regObj.style.display="none";
+	}
+	
+	function validate_form(){
+		var emailObj = document.getElementById("email");
+		var usernameObj = document.getElementById("username");
+		var password1Obj = document.getElementById("password1");
+		var password2Obj = document.getElementById("password2");
+
+		var emailreg = /[^\._-][\w\.-]*@(?:[A-Za-z0-9]+\.)+[A-Za-z]+$/;
+		if(!emailreg.test(emailObj.value))
+		{
+			emailObj.focus();
+			alert("email格式有错");
+			return false;
+		}
+		if(usernameObj.value.length==0){
+			usernameObj.focus();
+			alert("用户名必须输入");
+			return false;
+		}
+		return true;
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+	作者：2805647663@qq.com
+	时间：2017-04-19
+	描述：要求完成一个图片轮播的效果, 具体要求：
+		1、可以自动兼容10张以内的图片（增加或者减少轮播图片数量的时候，不会影响到整体布局和效果）。
+		2、手动点击可以切换对应的图片。
+		3、如果在没有手动点击的情况下，图片每隔5秒自动依次轮播，鼠标移动到大图的时候暂停自动轮播，
+		     鼠标移开的时候恢复自动轮播
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;cursor: pointer;}
+			#img_box{
+				margin: 20px auto;
+				padding: 0;
+				height:650px ;
+				width:1000px;
+				position: relative;	
+			}
+		    #img_ul{
+		    	height:650px ;
+				width:1000px;
+		    	list-style-type: none;
+		    }
+			img { 
+				height:650px ;
+				width:1000px;	
+				position: absolute;
+				transition: 2s; //淡入淡出效果
+			}
+
+			#img_nav{ 
+			 right: 30px;
+			 bottom: 20px;
+			 height: 21px;
+			 text-align:right; 
+			 position: absolute;
+			}
+			#img_nav span{
+			 display:block;
+			 width: 15px;
+			 height: 15px;
+			 border-radius: 50%;
+			 text-align: center;
+			 font-size: small;
+			 color:deepskyblue;
+			 border: 3px solid gray;
+			 float:left;		
+			}
+			.nav{
+				width: 20px;
+				height: 20px;
+			}
+			#nav_pre{
+			 right: 140px;
+			 bottom: 20px;
+			 height: 21px;
+			 width: 10px;
+			 text-align:right; 
+			 position: absolute;
+			 z-index: 50;
+			 
+			}
+			#nav_next{
+			 right: 10px;
+			 bottom: 20px;
+			 height: 21px;
+			 width: 10px;
+			 text-align:right; 
+			 position: absolute;
+			 z-index: 50;
+			 
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="img_box">
+			<ul id="img_ul">
+				<li ><a href="#" target="_blank"><img id="img_1" src="img/1.jpg"/></a></li>
+	            <li ><a href="#" target="_blank"><img id="img_2" src="img/2.jpg"/></a></li>
+	            <li ><a href="#" target="_blank"><img id="img_3" src="img/3.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_4" src="img/4.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_5" src="img/5.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_6" src="img/6.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_7" src="img/7.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_8" src="img/8.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_9" src="img/9.jpg"/></a></li>
+	          	<li ><a href="#" target="_blank"><img id="img_10" src="img/10.jpg"/></a></li>
+	          	
+			</ul>
+		<div id="img_nav">
+			<span id="button_1" ></span>
+			<span id="button_2" ></span>
+			<span id="button_3" ></span>
+			<span id="button_4" ></span>
+		</div>
+		<div id="nav_pre"></div>
+		<div id='nav_next'></div>
+		</div>
+	</body>
+	<script>
+		$(function(){
+			
+//			var img_count = $("#img_box ul li").length;
+//			var button_count=$("#img_nav span").length;
+			
+			var images = document.querySelectorAll('#img_ul  img');
+		    var spans =  document.querySelectorAll('#img_nav span');
+		    var b_1= document.getElementById("button_1")
+		    var b_2= document.getElementById("button_2")
+		    var b_3= document.getElementById("button_3")
+		    var b_4= document.getElementById("button_4")
+			var imgIndex = 1;
+			var b_index=0;
+			var img_page=0;
+			var _imgIndex=0
+
+			function showImage(img_index) {
+				
+				$("#img_nav").css('z-index',50)
+				for(i=0;i<images.length;i++){
+					img_id='img_'+(i+1)					
+					$('#'+img_id).css({'opacity':0,'z-index':40-i})
+				}
+				$("img").eq(img_index).css({'opacity':1});
+				$("#img_nav span").css({'background':''})
+				
+				//实现播放大于4张图片时，显示当前的滚动的小白点。
+				var b_index=img_index%4;
+				function clear_num(){
+					b_1.innerText='';
+					b_2.innerText='';
+					b_3.innerText='';
+					b_4.innerText='';
+				}
+				clear_num()
+				switch (b_index){
+					  case 0:
+					  	$("span").eq(0).css({'background':'white'});
+					  	b_1.innerText=img_index;
+					  	break;
+					  case 1: 
+					  	$("span").eq(1).css({'background':'white'});
+					  	b_2.innerText=img_index;
+					  	break;
+					  case 2: 
+					  	$("span").eq(2).css({'background':'white'});
+					  	b_3.innerText=img_index;
+					  	break;
+					  case 3:
+					  	$("span").eq(3).css({'background':'white'});
+					  	b_4.innerText=img_index;
+					  	break;	
+				}
+
+			}
+			
+			//加载初始页面
+			showImage(0)
+            //显示函数
+			function img_carousel(){
+				if (imgIndex % images.length == 0) {
+				    imgIndex = 0;
+				}
+				showImage(imgIndex);
+				imgIndex++;
+//				alert(imgIndex)
+				 
+		     }
+			
+			//自动播放
+            var timer=setInterval(img_carousel, 5000);
+            
+//          //同一组显示时，可以点击确定附近的页数。
+
+       		function button_fuc(id){
+   					$("#"+id).click(function(){
+   						img_page = parseInt(imgIndex/4)
+						clearInterval(timer);
+						switch(img_page){
+						case 0:
+						    _imgIndex=$("#"+id).index();
+						    break;
+						case 1:
+							 _imgIndex=$("#"+id).index()+4;
+							 break;
+						case 2:
+							 _imgIndex=$("#"+id).index()+ 8;
+							 break;
+						}
+						showImage(_imgIndex);
+						imgIndex=_imgIndex;
+						timer= setInterval(img_carousel, 5000);	
+					});
+	
+       			}
+			
+       
+			
+			button_fuc('button_1')
+			button_fuc('button_2')
+			button_fuc('button_3')
+			button_fuc('button_4')
+			
+			//鼠标悬浮
+			$("#img_ul").hover(function() {
+                clearInterval(timer);
+           },function() {
+            	timer=setInterval(img_carousel, 5000);
+            })
+	
+		})
+		
+	</script>
+</html>

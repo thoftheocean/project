@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--
+	作者：2805647663@qq.com
+	时间：2017-04-19
+	描述：要求完成一个图片轮播的效果, 具体要求：
+		1、可以自动兼容10张以内的图片（增加或者减少轮播图片数量的时候，不会影响到整体布局和效果）。
+		2、手动点击可以切换对应的图片。
+		3、如果在没有手动点击的情况下，图片每隔5秒自动依次轮播，鼠标移动到大图的时候暂停自动轮播，
+		     鼠标移开的时候恢复自动轮播
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;cursor: pointer;}
+			#img_box{
+				margin: 20px auto;
+				padding: 0;
+				height:500px ;
+				width:800px;
+					
+			}
+		    #img_ul{
+		    	
+		    	list-style-type: none;
+		    }
+		   
+			#img_1{
+				background: url(img/11.jpg) center top no-repeat ; 
+				height:563px ;
+				width:1000px;	
+				display:list-item;
+				position: absolute;
+				transition: 2s; //淡入淡出效果
+			}
+			#img_2{
+				background: url(img/2.jpg) ; 
+				height:500px ;
+				width:800px;	
+				display:none;
+				position: absolute;
+				transition: 2s; //淡入淡出效果
+			}
+			#img_3{
+				background: url(img/3.jpg)  ; 
+				height:500px ;
+				width:800px;	
+				display: none;
+				position: absolute;
+				transition: 2s; //淡入淡出效果
+			}
+			#img_nav{ /*用绝对定位给数字按钮进行布局*/
+			 margin-top: -30px;
+			 margin-right: 20px;
+			 text-align:right;
+			 font-size: 12px; 
+			 line-height: 20px;
+			}
+			#img_nav span{
+			 display:inline-block;
+			 height: 10px;
+			 width: 30px;
+			 background: burlywood;			
+			}
+			#img_nav span.on{background:#fff;}
+		</style>
+	</head>
+	<body>
+		<div id="img_box">
+			<ul id="img_ul">
+				<li id="img_1" ></li>
+				<li id="img_2" ></li>
+				<li id="img_3" ></li>
+			</ul>
+		<div id="img_nav">
+			<span id="set_1" ></span>
+			<span id="set_2" ></span>
+			<span id="set_3" ></span>
+		</div>
+		</div>
+	</body>
+	<script>
+		$(function(){
+			
+			var img_count = $("#img_box ul li").length;
+			var button_count=$("#img_nav span").length;
+			var count = 1;
+			
+			function showImage(img_index) {
+				
+				$("#img_nav").css('z-index',50)	
+				$("#img_1").css('display', 'none');	
+				$("#img_2").css('display','none');	
+				$("#img_3").css('display','none');
+				$("li").eq(img_index).css({'display':'list-item'})
+				$("#img_nav span").css({'background':''})
+				$("span").eq(img_index).css({'background':'white'})
+			}
+	
+				showImage(0)
+	            //显示函数
+				function img_carousel(){
+					if (count % == 0) {
+					    count = 0;
+					}
+					showImage(count);
+					count++;
+			     }
+			
+				//自动播放
+	            var timer=setInterval(img_carousel, 2000);
+	            //点击
+				function button_fuc(id){
+					$("#"+id).click(function(){
+						clearInterval(timer);
+					    count=$("#"+id).index()
+						showImage(count);
+						timer= setInterval(img_carousel, 2000);	
+					});
+				};
+				
+				button_fuc('set_1')
+				button_fuc('set_2')
+				button_fuc('set_3')
+				
+				
+				$("#img_box").hover(function() {
+	                clearInterval(timer);
+	           },function() {
+	            	timer=setInterval(img_carousel, 2000);
+	           });
+			
+			});
+		
+
+	</script>
+</html>

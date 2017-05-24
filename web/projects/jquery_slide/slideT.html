@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			
+			a{
+				text-decoration: none;
+			}
+			
+			li{
+				list-style: none;
+			}
+			
+			body{
+				font-family: "微软雅黑";
+			}
+			
+			.turn_ul{
+				width: 800px;
+				height: 600px;
+				margin: 0 auto;
+				position: relative;
+				/*float: left;*/
+			}
+			
+			.turn_li
+			{
+				width: 800px;
+				height: 600px;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+			
+			.img
+			{
+				width: 800px;
+				height: 600px;
+			}
+			
+			.num_ul
+			{
+				width: 800px;
+				height: 600px;
+				margin: 0 auto;
+				position: relative;
+				z-index: 100;
+				/*float: left;*/
+				
+			}
+			
+			.num_li
+			{
+				width: 40px;
+				height: 50px;
+				top: -100px;
+				float: left;
+				text-align: center;
+				line-height: 50px;
+				margin-left: 20px;
+				cursor: pointer;
+			}
+			
+			.unselect{
+				
+				background-color: red;
+			}
+			
+			.select{
+				background-color: blue;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		
+		<script>
+			
+			var _count = 5;
+			var _current_index = 0;
+			var _timer = null;
+			
+			function turnImage(index)
+			{
+				$(".turn_ul").find("img").each(function(i,item){
+					if(i == index)
+					{
+						$(item).fadeIn();
+					}
+					else
+					{
+						$(item).fadeOut();
+					}
+    			});
+    			
+    			$(".num_ul").find("li").each(function(i,item){
+					if(i == index)
+					{
+						$(item).removeClass("unselect").addClass("select");
+					}
+					else
+					{
+						$(item).removeClass("select").addClass("unselect");
+					}
+    			});
+			}
+			
+			function changeImage()
+			{ 
+				_current_index = _current_index + 1;
+				if(_current_index == _count)
+				{
+					_current_index = 0;
+				}
+				
+				turnImage(index); 
+			}
+			
+			$(document).ready(function(){
+    			_timer = setInterval(changeImage,3000);
+    			
+    			$(".turn_li").hover(function(){
+    				clearInterval(_timer);
+    			},
+    			function(){
+    				_timer = setInterval(changeImage,3000);
+    			});
+    			
+    			//对下标进行复写
+    			var str = "";
+    			for (var i = 0; i < _count; ++i) {
+    				if(i == 0)
+    				{
+    					str = str + "<li index='" + i + "' class='num_li select'>" + (i + 1) + "</li>";
+    				}
+    				else
+    				{
+    					str = str + "<li index='" + i + "' class='num_li unselect'>" + (i + 1) + "</li>";
+    				}
+    			}
+    			
+    			$(".num_ul").html(str);
+    			
+    			$(".num_li").click(function()
+    			{
+    				clearInterval(_timer);
+    				var index = parseInt($(this).attr("index"));//$(this).attr("index") 返回当前的index
+    				alert($(this).attr("index")) 
+    				console.log(index);
+    				turnImage(index);
+    				_timer = setInterval(changeImage,3000);
+    			});
+    			
+			});
+			  
+		</script>
+		
+		<div style="width: 100%;">
+		
+			<ul class="turn_ul">
+				<li class="turn_li" style="z-index: 99;"><img class="img" src="img/1.jpg" alt=""/></li>
+				<li class="turn_li" style="z-index: 98;"><img class="img" src="img/2.jpg" alt=""/></li>
+				<li class="turn_li" style="z-index: 97;"><img class="img" src="img/3.jpg" alt=""/></li>
+				<li class="turn_li" style="z-index: 96;"><img class="img" src="img/4.jpg" alt=""/></li>
+				<li class="turn_li" style="z-index: 95;"><img class="img" src="img/5.jpg" alt=""/></li>
+			</ul>
+			<ul class="num_ul">
+				<li class="num_li">1</li>
+				<li class="num_li">2</li>
+				<li class="num_li">3</li>
+				<li class="num_li">4</li>
+				<li class="num_li">5</li>
+			</ul>
+		</div>
+		
+	</body>
+</html>
