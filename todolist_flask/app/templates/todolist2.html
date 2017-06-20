@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+    <h2>ToDoList</h2>
+    <div class="container" style="">
+        {% for message in get_flashed_messages()%}
+            <div class="alert-info"> {{ message }} </div>
+        {% endfor %}
+        {{ wtf.quick_form(add_form) }}
+    </div>
+{% endblock %}
