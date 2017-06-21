@@ -27,19 +27,80 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+{% block styles %}
+    {{ super() }}
+
+    <style type="text/css">
+        .events{
+            min-width:300px ;
+            width: auto;
+            max-width: 1000px;
+            margin:0 auto;
+
+
+        }
+        .show_event{background-color: ghostwhite;
+                min-width:300px;
+                height: 100px;
+                width: 1000px;
+{#                list-style:none;#}
+                margin:0 auto;
+                word-wrap: break-word;
+                }
+        .button_event{
+
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        function edit_event(){
+
+        }
+
+        function delete_event(){
+
+        }
+    </script>
+
+{% endblock %}
 {% block content %}
+
     <h2>ToDoList</h2>
-    <div class="container" style="height:300px">
+
+    <div class="container">
         {% for message in get_flashed_messages()%}
             <div class="alert-info"> {{ message }} </div>
         {% endfor %}
         {{ wtf.quick_form(add_form) }}
     </div>
-    <ol>
-        {% for event in  events  %}
-            <li class="event" style="width: 300px ; height: 100px">{{ event }}</li>
-        {% endfor %}
-    </ol>
+
+    </br>
+
+    <form action="" method="post">
+
+{#        <div class="add_event">#}
+{#            <input type="text" name="add_event">#}
+{#            <input type="submit">#}
+{##}
+{#        </div>#}
+
+         <div class="events">
+            <ul>
+            {% for event in  events  %}
+                <textarea class="show_event" rows="5">{{ event[1] }}</textarea>
+
+                </br>
+                <div class="button_event">
+                    <input type="button" value="编辑">
+                    <input type="button" value="删除">
+                    <input type="checkbox">
+                </div>
+                </br>
+            {% endfor %}
+            </ul>
+        </div>
+    </form>
 
 
 {% endblock %}

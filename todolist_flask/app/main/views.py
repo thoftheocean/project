@@ -11,12 +11,11 @@ from flask_babel import gettext as _
 
 @main.route("/")
 def home():
-
     page_home = request.args.get('page', 1, type=int)
     query = Post.query.order_by(Post.created.desc())
     pagination = query.paginate(page_home, per_page=20, error_out=False)
     posts = pagination.items
-    return render_template('index.html',
+    return render_template('home.html',
                            title=u"欢迎来到H的博客",
                            post=posts,
                            pagination=pagination)
@@ -100,12 +99,10 @@ def edit(id=0):
 #     return u'正在关闭服务端进程...'
 
 
-@main.route('/todolist/', methods=['GET', 'POST'] )
+@main.route('/todolist/', methods=['GET', 'POST'])
 def todolist():
     add_form = AddEventForm()
-    events = db.session.query(Event.content).all()
-    # events  = Event.query.get(1).content
-
+    events = db.session.query(Event.id, Event.content).all()
 
     if add_form.validate_on_submit():
         event = Event(content=add_form.content.data)
@@ -114,28 +111,22 @@ def todolist():
         flash('添加事件成功')
         return redirect(url_for('main.todolist'))
 
-
-
     return render_template('todolist.html',
                            title='todolist页面',
                            add_form=add_form,
                            events=events)
-@main.route('/')
-def show():
-    events=Event.query.filter_by(id=current_user.id).all()
-    if events is None:
-        flash('你还未添加任何事项')
-    return render_template('todolist.html', events=events)
+
 @main.route('/edit_event')
 def edit_event(id):
     event = Event.query.get_or_404(id)
     edit_form = EditEventForm()
     if edit_form.validate_on_submit():
-        event.content=edit_form.content.data
+        event.content = edit_form.content.data
         db.session.add(event)
         flash('事件更新')
-    edit_form.content.data=event.content
+    edit_form.content.data = event.content
     return render_template('todolist2.html', title='todolist页面')
+
 
 @main.route('/edit_event')
 def delet_event(id):
