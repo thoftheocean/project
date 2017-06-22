@@ -69,3 +69,4 @@ class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.INTEGER, primary_key=True)
     content = db.Column(db.String)
+    status = db.Column(db.String)

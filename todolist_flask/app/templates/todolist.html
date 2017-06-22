@@ -39,29 +39,9 @@
 
 
         }
-        .show_event{background-color: ghostwhite;
-                min-width:300px;
-                height: 100px;
-                width: 1000px;
-{#                list-style:none;#}
-                margin:0 auto;
-                word-wrap: break-word;
-                }
-        .button_event{
-
-        }
     </style>
 
 
-    <script type="text/javascript">
-        function edit_event(){
-
-        }
-
-        function delete_event(){
-
-        }
-    </script>
 
 {% endblock %}
 {% block content %}
@@ -79,29 +59,69 @@
 
     <form action="" method="post">
 
-{#        <div class="add_event">#}
-{#            <input type="text" name="add_event">#}
-{#            <input type="submit">#}
-{##}
-{#        </div>#}
-
          <div class="events">
             <ul>
             {% for event in  events  %}
-                <textarea class="show_event" rows="5">{{ event[1] }}</textarea>
-
+                <textarea id="{{ event[0] }}"  name="event" rows="3" cols="130" readonly="readonly"   >{{ event[1] }}</textarea>
                 </br>
                 <div class="button_event">
-                    <input type="button" value="编辑">
-                    <input type="button" value="删除">
-                    <input type="checkbox">
+                    <input type="button" value="编辑" onclick="edit_event({{ event[0] }})">
+                    <input type="button" value="保存" onclick="save_event({{ event[0] }})">
+                    <input type="button" value="删除" onclick="delete_event({{ event[0] }})">
+
+
+                    <input type="button" value="{{ event[2] }}" style="background-color: orange;color: red" onclick="event_status({{ event }},{{ event[0] }})">
+{#                    <input id='check' type="checkbox" value="1" onclick="finish_event({{ event }},{{ event[0] }})">#}
                 </div>
                 </br>
+                <script type="text/javascript">
+                        function edit_event(id){
+                            document.getElementById(id).readOnly=false;
+                        }
+
+                        function delete_event(id){
+                             window.location.href="/todolist/?id="+ id+"&operate=delete";
+                        }
+
+                        function save_event(id){
+                            save_event=document.getElementById(id)
+                            b=save_event.value
+                            window.location.href="/todolist/?id="+ id+"&operate=save&value="+b;
+                        }
+
+{#                        function finish_event(status,id){#}
+{#                            var event=document.getElementById(id)#}
+{#                            alert(status)#}
+{#                            if (status == 'undo'){#}
+{#                                alert('完成')#}
+{#                                event.style.textDecoration = "line-through";#}
+{#                                status='done'#}
+{#                            }#}
+{#                            else{#}
+{#                                alert('取消完成')#}
+{#                                event.style.textDecoration = false;#}
+{#                                status='done'#}
+{#                            }#}
+{#                            window.location.href="/todolist/?id="+ id+"&status=" + status ;#}
+{#                        }#}
+
+                        function event_status(status,id) {
+                            if(status=='未完成'){
+                                status='已完成'
+                            }
+                            else {
+                                status='未完成'
+                            }
+                            window.location.href="/todolist/?id="+ id+"&status=" + status ;
+
+
+                        }
+
+               </script>
             {% endfor %}
             </ul>
         </div>
     </form>
-
 
 {% endblock %}
 

@@ -99,40 +99,47 @@ def edit(id=0):
 #     return u'正在关闭服务端进程...'
 
 
+
 @main.route('/todolist/', methods=['GET', 'POST'])
 def todolist():
     add_form = AddEventForm()
-    events = db.session.query(Event.id, Event.content).all()
+    events = db.session.query(Event.id, Event.content, Event.status).all()
 
     if add_form.validate_on_submit():
-        event = Event(content=add_form.content.data)
+        #添加
+        event = Event(content=add_form.content.data, status='未完成')
         db.session.add(event)
         db.session.commit()
         flash('添加事件成功')
         return redirect(url_for('main.todolist'))
 
-    return render_template('todolist.html',
-                           title='todolist页面',
-                           add_form=add_form,
-                           events=events)
+    if request.args.get('operate') == "delete":
+        # 删除
+        delete_id = request.args.get('id')
+        delete_event = Event.query.filter(Event.id == delete_id).first()
+        if delete_event != None:
+            db.session.delete(delete_event)
+            db.session.commit()
+        return redirect(url_for('main.todolist'))
 
-@main.route('/edit_event')
-def edit_event(id):
-    event = Event.query.get_or_404(id)
-    edit_form = EditEventForm()
-    if edit_form.validate_on_submit():
-        event.content = edit_form.content.data
-        db.session.add(event)
-        flash('事件更新')
-    edit_form.content.data = event.content
-    return render_template('todolist2.html', title='todolist页面')
-
-
-@main.route('/edit_event')
-def delet_event(id):
-    event = Event.query.get_or_404(id)
-    if event:
-        event.completion = True
+    if request.args.get('operate') == "save":
+        # 保存编辑
+        event = Event.query.filter(Event.id == request.args.get('id')).first()
+        event.content = request.args.get('value')
         db.session.add(event)
         db.session.commit()
         return redirect(url_for('main.todolist'))
+        #保存状态
+    if request.args.get('status'):
+        event = Event.query.filter(Event.id == request.args.get('id')).first()
+        event.status = request.args.get('status')
+        db.session.add(event)
+        db.session.commit()
+        return redirect(url_for('main.todolist'))
+
+    return render_template('todolist.html',
+                            title='todolist页面',
+                            add_form=add_form,
+                            events=events,
+                            )
+
