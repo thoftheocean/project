@@ -46,9 +46,11 @@
 {% endblock %}
 {% block content %}
 
-    <h2>ToDoList</h2>
 
-    <div class="container">
+
+{#    <div class="container">#}
+    <div class="events">
+    <h2>ToDoList</h2>
         {% for message in get_flashed_messages()%}
             <div class="alert-info"> {{ message }} </div>
         {% endfor %}
@@ -69,7 +71,6 @@
                     <input type="button" value="保存" onclick="save_event({{ event[0] }})">
                     <input type="button" value="删除" onclick="delete_event({{ event[0] }})">
 
-
                     <input type="button" value="{{ event[2] }}" style="background-color: orange;color: red" onclick="event_status({{ event }},{{ event[0] }})">
 {#                    <input id='check' type="checkbox" value="1" onclick="finish_event({{ event }},{{ event[0] }})">#}
                 </div>
@@ -89,22 +90,6 @@
                             window.location.href="/todolist/?id="+ id+"&operate=save&value="+b;
                         }
 
-{#                        function finish_event(status,id){#}
-{#                            var event=document.getElementById(id)#}
-{#                            alert(status)#}
-{#                            if (status == 'undo'){#}
-{#                                alert('完成')#}
-{#                                event.style.textDecoration = "line-through";#}
-{#                                status='done'#}
-{#                            }#}
-{#                            else{#}
-{#                                alert('取消完成')#}
-{#                                event.style.textDecoration = false;#}
-{#                                status='done'#}
-{#                            }#}
-{#                            window.location.href="/todolist/?id="+ id+"&status=" + status ;#}
-{#                        }#}
-
                         function event_status(status,id) {
                             if(status=='未完成'){
                                 status='已完成'
@@ -113,8 +98,6 @@
                                 status='未完成'
                             }
                             window.location.href="/todolist/?id="+ id+"&status=" + status ;
-
-
                         }
 
                </script>

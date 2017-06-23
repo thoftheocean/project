@@ -11,8 +11,13 @@
             {{ post.body_html | safe }}
         </div>
 
-        {# 操作链接 #}
-        <h3>评论</h3>
+        {# 操作,编辑，保存，删除#}
+{#        <div class="button_event">#}
+{#            <input type="button" value="编辑" onclick="edit_post({{ event[0] }})">#}
+{#            <input type="button" value="保存" onclick="save_post({{ event[0] }})">#}
+{#            <input type="button" value="删除" onclick="delete_post({{ event[0] }})">#}
+{#        </div>#}
+
         {# 发表评论 #}
         <div>
             {{ wtf.quick_form(form) }}
@@ -21,17 +26,20 @@
         {# 评论列表 #}
         {% for comment in post.comments|sort(attribute='created',reverse=True ) %}
             <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-circle" src="{{ comment.author.email | gravatar }}">
-                    </a>
-                </div>
+{#                <div class="media-left">#}
+{#                    <a href="#">#}
+{#                        <img class="media-object img-circle" src="{{ comment.author.email | gravatar }}">#}
+{#                    </a>#}
+{#                </div>#}
+
                 <div class="media-body">
-                    <small class="text-muted">{{ comment.created }}</small>
+                    <span>{{ comment.author.name }} </span>
+                    <span class="text-muted">{{ comment.created }}</span>
                     <div>{{ comment.body }}</div>
 
                 </div>
             </div>
         {% endfor %}
+        {# 显示评论 #}
     </div>
 {% endblock %}

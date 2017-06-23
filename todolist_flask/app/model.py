@@ -1,7 +1,8 @@
 from . import db, login_manager
 import datetime
 from flask_login import UserMixin, AnonymousUserMixin
-import markdown
+from markdown import markdown
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -23,17 +24,29 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.INTEGER, db.ForeignKey('roles.id')) #外键
 
     posts = db.relationship('Post', backref='author')
-    # @staticmethod
-    # def on_created(target, value, initiator):
-    #     target.role = Role.query.filter_by(name='Guests').first()
+    comments = db.relationship('Comment', backref='author')
+
+
+    @staticmethod
+    def on_created(target, value, oldvalue, initiator):
+        target.role = Role.query.filter_by(name='Guests').first()
+
+
+class AnonymousUser(AnonymousUserMixin):
+    @property
+    def locale(self):
+        return 'zh'
+    def is_administrator(self):
+        return False
+
+login_manager.anonymous_user = AnonymousUser
 
 @login_manager.user_loader
 def load_user(user_id):
-    User.query.get(int(user_id))
+    return User.query.get(int(user_id))
 
+db.event.listen(User.name, 'set', User.on_created)
 
-
-# db.event.listen(User.name, 'set', User.on_created)
 
 
 class Post(db.Model):
@@ -45,7 +58,6 @@ class Post(db.Model):
     created = db.Column(db.DATETIME, index=True, default=datetime.datetime.now())
 
     comments = db.relationship('Comment', backref='post')
-
     author_id = db.Column(db.INTEGER, db.ForeignKey('users.id'))
     @staticmethod
     def on_body_change(target, value, oldvalue, initiator):
@@ -55,12 +67,12 @@ class Post(db.Model):
             target.body_html = markdown(value)
 
 db.event.listen(Post.body, 'set', Post.on_body_change)
+
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.INTEGER, primary_key=True)
-    title = db.Column(db.String)
     body = db.Column(db.String)
-
+    created = db.Column(db.DateTime, index=True, default=datetime.datetime.now())
     post_id = db.Column(db.INTEGER, db.ForeignKey('posts.id'))
     author_id = db.Column(db.INTEGER, db.ForeignKey('users.id'))
 

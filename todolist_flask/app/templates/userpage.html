@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+
+{% block page_body %}
+    <div class="container">
+    <h2><a href="#">{{ current_user.name }}的个人博客</a></h2>
+    <a href="{{ url_for('main.edit') }}" class="btn btn-primary">发表新文章</a>
+    </div>
+
+    <div class="container">
+        {% for post in posts %}
+
+            <h2><a href="{{ url_for('main.post', id = post.id) }}">{{ post.title }}</a></h2>
+            <div>
+                {{ post.body_html|safe }}
+            </div>
+        {% endfor %}
+
+        {% if pagination %}
+            {{ render_pagination(pagination) }}
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+{#{% extends 'base.html' %}#}
+{#{% import 'bootstrap/wtf.html' as wtf %}#}
+{#{% from "bootstrap/pagination.html" import render_pagination %}#}
+{##}
+{#{{ current_user }}#}
+{#{% if current_user.is_authenticated %}#}
+{#    {% block page_body %}#}
+{#            <div class="container">#}
+{#            <h2><a href="#">{{ current_user.name }}</a></h2>#}
+{#            <a href="{{ url_for('main.edit') }}" class="btn btn-primary">发表新文章</a>#}
+{#            </div>#}
+{#    {% endblock %}#}
+{##}
+{#{% else %}#}
+{#    {% block content %}#}
+{#        <div class="page-header">#}
+{#            <div class="container">#}
+{#                <h1>{{ self.title() }}</h1>#}
+{#            </div>#}
+{##}
+{#        </div>#}
+{##}
+{#        <div class="container">#}
+{#            {% for message in get_flashed_messages()%}#}
+{#                <div class="alert-info"> {{ message }} </div>#}
+{#            {% endfor %}#}
+{#            {{ wtf.quick_form(form) }}#}
+{#        </div>#}
+{#    {% endblock %}#}
+{#{% endif %}#}
