@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title>todolist</title>
     <style type="text/css">
+        body{
+            background-color: aquamarine;
+        }
+        input{
+            background-color: deepskyblue;
+        }
+        textarea{
+            background-color: ghostwhite;
+        }
        .todolists{
             min-width:300px ;
             width: auto;
@@ -14,16 +23,18 @@
 </head>
 <body>
     <h1>ToDoList</h1>
-    <div >
+    <div class="todolists" >
          <form action="{% url 'todolist' %}" method="post">
          {% csrf_token %}
-        <textarea cols="50" rows="2" name="event"></textarea>
+        <textarea cols="100" rows="2" name="event"></textarea>
         </br>
-        <input type="submit" value="添加"></br>
+        <input type="submit" value="添加">
         </form>
     </div>
 
     <div class="todolists">
+        </br>
+        </br>
         {% for todolist  in todolists %}
             <textarea id="{{ todolist.id }}" rows="3" cols="100" readonly="readonly" >{{ todolist.event }}</textarea>
             </br>

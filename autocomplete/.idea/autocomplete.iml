@@ -4,7 +4,7 @@
     <facet type="django" name="Django">
       <configuration>
         <option name="rootFolder" value="$MODULE_DIR$" />
-        <option name="settingsModule" value="todolist_django/settings.py" />
+        <option name="settingsModule" value="autocomplete/settings.py" />
         <option name="manageScript" value="manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
       </configuration>
@@ -12,14 +12,14 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.5.1 virtualenv at D:\HXprogram\virtual_environment\PythonDjango3.5.3" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../todolist_django\templates" />
+        <option value="$MODULE_DIR$/../autocomplete\templates" />
       </list>
     </option>
   </component>
