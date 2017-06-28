@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索自动补全功能</title>
+    <style type="text/css">
+        body{
+            background-color: aquamarine;
+        }
+        .search{
+            margin: 0 auto;
+            width: 500px;
+        }
+        input{
+            height: 30px;
+        }
+
+    </style>
+    <script type="text/javascript" src="../static/jquery-3.2.1.js"></script>
+</head>
+<body>
+    <div class="search">
+        <form action="/search/" method="post">
+            <input type="text" name="text" maxlength="255px" width="200px" autocomplete="on"/>
+            <input type="submit" name="submit" value="搜索" onclick="JqRequest()">
+        </form>
+	</div>
+    <script type="text/javascript">
+        function JqRequest(){
+            $.post({
+                url: '/process/',
+                data: {"n1": 333, "n2": 333},
+                dataType: 'text',
+                success: function(data, statusText, xmlHttpRequest){
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

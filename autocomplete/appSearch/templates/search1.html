@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ajax搜索自动补全</title>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+        body{
+            background-color: aquamarine;
+        }
+        div{
+            margin-top: 300px;
+            margin-left: 520px;
+        }
+{#        p{#}
+{#            color: deepskyblue;#}
+{#        }#}
+        input{
+            height: 25px;
+        }
+
+    </style>
+<body>
+
+    <div>
+     <form action="/search1/" method="get" style="margin: auto 0;">
+         <p>试着输入'北京'</p>
+         <input type="text"   id="search-text"   name="search_content">
+         <input type="button" id='search-button' value="搜索">
+         <p><span id='search-result'></span></p>
+     </form>
+    </div>
+
+    <script src='../static/jquery-3.2.1.js'></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $("#search-text").keyup(function(){    //当按钮被松开时，发生 keyup 事件。它发生在当前获得焦点的元素上。
+                var search_content = $("#search-text").val();                         //获取搜索框输入的值
+                $.ajax({
+                    url: '/process/',
+                    data:  {'search_content':search_content},
+                    dataType: 'text',
+                    success: function(data, statusText, xmlHttpRequest){
+                        console.log(data);
+                        for (var i = data.length - 1; i >= 0; i--) {
+                            $('#search-result').append(data[0]+'<br/>')      //加入到search-result部分显示
+                        };
+                    }
+                });
+            });
+
+            $('#search-text').keydown(function(){
+                $('#search-result').empty();
+            })
+
+            $('#search-text').blur(function(){
+                $('#search-result').empty();
+                })
+            });
+
+{#       $(document).ready(function(){#}
+{##}
+{#            $("#search-text").keyup(function(){    //当按钮被松开时，发生 keyup 事件。它发生在当前获得焦点的元素上。#}
+{#                var search_content = $("#search-text").val();                         //获取搜索框输入的值#}
+{#                $.get("/search1/",{'search_content':search_content}, function(data){  //参数：发送的url；传入的数据；请求成功后的调用函数（data即是试图函数返回的json格式数据）详情#}
+{#                    for (var i = data.length - 1; i >= 0; i--) {#}
+{#                            $('#search-result').append(data[i]+'<br/>')      //加入到search-result部分显示#}
+{#                        };#}
+{#                })#}
+{#            });#}
+{##}
+{#            $('#search-text').keydown(function(){#}
+{#                $('#search-result').empty();#}
+{#            })#}
+{##}
+{#            $('#search-text').blur(function(){#}
+{#                $('#search-result').empty();#}
+{#                })#}
+{#            });#}
+    </script>
+</body>
+</html>
